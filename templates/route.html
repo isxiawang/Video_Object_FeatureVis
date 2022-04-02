@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/js/external/d3.v4.min.js"></script>
+</head>
+<body>
+<div id="test">
+</div>
+</body>
+
+<script>
+    svg = d3.select("body")
+        .select("#test")
+        .append("svg")
+        .attr("width", 1000)
+        .attr("height", 1000);
+
+    color = {
+        "0001_c1s1_001051_03": [
+            [
+                0.3406982421875,
+                "rgb(120,114,111)"
+            ],
+            [
+                0.11083984375,
+                "rgb(199,193,184)"
+            ],
+            [
+                0.247314453125,
+                "rgb(158,149,142)"
+            ],
+            [
+                0.172119140625,
+                "rgb(37,32,32)"
+            ],
+            [
+                0.1290283203125,
+                "rgb(85,73,69)"
+            ]
+        ],
+        "0001_c1s1_002301_02": [
+            [
+                0.11328125,
+                "rgb(220,210,204)"
+            ],
+            [
+                0.2994384765625,
+                "rgb(139,131,127)"
+            ],
+            [
+                0.22802734375,
+                "rgb(175,163,155)"
+            ],
+            [
+                0.264892578125,
+                "rgb(110,98,93)"
+            ],
+            [
+                0.0943603515625,
+                "rgb(61,53,51)"
+            ]
+        ]
+    }
+    h = 100
+    color1 = color["0001_c1s1_001051_03"]
+    color2 = color["0001_c1s1_002301_02"]
+    node1 = [5, 0]
+    node2 = [500, 500]
+
+
+    g = svg.append("g")
+        .attr("id", "route")
+        .attr("transform", "translate(" + 0 + "," + 0 + ")")
+        .attr("width", 1000)
+        .attr("height", 1000)
+
+    route(node1, node2, h, color1, color2, g);
+
+    function route(node0, node1, h, color0, color1, g) {
+        x0 = node0[0];
+        y0 = node0[1];
+        x1 = node1[0];
+        y1 = node1[1];
+
+        for (var i = 0; i < 5; i++) {
+            N = 2
+            let path = d3.path();
+            cpx1 = x0 + (x1 - x0) / N
+            cpy1 = y0
+            cpx2 = x1 - (x1 - x0) / N
+            cpy2 = y1
+
+
+            dpx1 = x1 + (x0 - x1) / N
+            dpy1 = y1 + color1[i][0] * h
+            dpx2 = x0 - (x0 - x1) / N
+            dpy2 = y0 + color0[i][0] * h
+            path.moveTo(x0, y0);
+            path.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x1, y1);
+            path.lineTo(x1, y1 + color1[i][0] * h);
+            path.bezierCurveTo(dpx1, dpy1, dpx2, dpy2, x0, y0 + color0[i][0] * h);
+            path.lineTo(x0, y0);
+
+
+            var a = d3.rgb(255, 0, 0);	//红色
+            var b = d3.rgb(0, 255, 0);	//绿色
+            var defs = svg.append("defs");
+            var linerGradient = defs.append("linearGradient")
+                .attr("id", "linearColor")
+                .attr("x1", "0%")
+                .attr("y1", "0%")
+                .attr("x2", "100%")
+                .attr("y2", "0%");
+            var stop1 = linerGradient.append("stop")
+                .attr("offset", "0%")
+                .style("opacity", 0.5)
+                .style("stop-color", a.toString());
+            var stop2 = linerGradient.append("stop")
+                .attr("offset", "100%")
+                .style("stop-color", b.toString());
+
+
+            g.append("path")
+                .attr("d", path)
+                .attr("stroke", "white")
+                .attr("fill", "url(#" + linerGradient.attr("id") + ")")
+
+            y0 = y0 + color0[i][0] * h
+            y1 = y1 + color1[i][0] * h
+
+        }
+    }
+
+</script>
+</html>

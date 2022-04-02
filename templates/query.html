@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Query</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/query_layout.css" %}">
+    <script src="{% static "js/external/jquery.min.js" %}"></script>
+    <script src="{% static "js/external/popper.min.js" %}"></script>
+    <script src="{% static "js/external/bootstrap.min.js" %}"></script>
+    <script src="{% static 'js/external/d3.v4.min.js' %}"></script>
+</head>
+<body>
+<div id="head">
+    {#前多少张图？#}
+    <div class="input-group-prepend">
+        <input type="text" class="btn btn-outline-secondary dropdown-toggle" id="front" value="10">
+    </div>
+    {#show_front按钮#}
+    <div class="input-group-prepend">
+        <button type="button" onclick="show_front()">
+            show_front
+        </button>
+    </div>
+
+    {#筛选#}
+    <div class="input-group-prepend">
+        <button type="button" class="btn btn-outline-secondary">
+            前多少张图
+        </button>
+        <input type="text" class="btn btn-outline-secondary dropdown-toggle" value="10" id="head_number">
+    </div>
+    {#错误率、个数#}
+    <div class="input-group-prepend">
+        <select class="btn btn-outline-secondary" id="error_type">
+            <option>错误个数</option>
+            <option>正确个数</option>
+            <option>错误比率</option>
+        </select>
+        <input type="text" class="btn btn-outline-secondary dropdown-toggle" id="error_number" value="10">
+    </div>
+    {#submit_filter按钮#}
+    <div class="input-group-prepend">
+        <button type="button" onclick="submits_filter()">
+            submit_filter
+        </button>
+    </div>
+
+    {#pid#}
+    <div class="input-group-prepend">
+        <input type="text" class="btn btn-outline-secondary dropdown-toggle" id="pid" value="0078_c1s1_011576_00.jpg">
+    </div>
+    {#submit_pid按钮#}
+    <div class="input-group-prepend">
+        <button type="button" onclick="submits_pid()">
+            submit_pid
+        </button>
+    </div>
+
+    {#pid#}
+    <div class="input-group-prepend">
+        <input type="text" class="btn btn-outline-secondary dropdown-toggle" id="g_num" value="500">
+    </div>
+</div>
+
+{#图片放置（所有图片展示）#}
+<div id="queryPic">
+</div>
+
+{#图片放置（筛选图片展示）#}
+<script>
+    {#参数获取#}
+    var headnum = document.getElementById('head_number');
+    var errornum = document.getElementById('error_number');
+    var error_type = document.getElementById('error_type');
+    var g_num = document.getElementById('g_num');
+    var pid = document.getElementById('pid');
+
+
+    function submits_filter() {
+        console.log(headnum.value);
+        console.log(errornum.value);
+        console.log(error_type.value);
+        if (errornum.value.length == 0) { // "",[]
+            display();
+        } else {
+            {#利用ajax传一个pid_list回来然后display(pid_list)#}
+            $.ajax({
+                type: 'POST',
+                url: '../filter/',
+                dataType: "json",
+                data: {
+                    "error_type": JSON.stringify(error_type.value),
+                    "errornum": JSON.stringify(parseFloat(errornum.value)),
+                    "headnum": JSON.stringify(parseInt(headnum.value))
+                },
+                async: true,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    console.log(obj);
+                    picture_path_list = obj.picture_path_list;
+                    picture_true_list = obj.picture_true_list;
+                    true_list = obj.true_list;
+                    index_list = obj.index_list;
+                    path_list = obj.path_list;
+                    display(picture_path_list, picture_true_list, true_list, index_list, path_list);
+                }
+            });
+        }
+    }
+
+    function submits_pid() {
+        console.log(pid.value);
+        {#window.location.href = 'index.html?pid=' + pid.value;#}
+        $.ajax({
+            type: 'POST',
+            url: '../filter_pid/',
+            dataType: "json",
+            data: {
+                "pid": JSON.stringify(pid.value),
+            },
+            async: true,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                console.log(obj);
+                picture_path_list = obj.picture_path_list;
+                picture_true_list = obj.picture_true_list;
+                true_list = obj.true_list;
+                index_list = obj.index_list;
+                path_list = obj.path_list;
+                display(picture_path_list, picture_true_list, true_list, index_list, path_list);
+            }
+        });
+    }
+
+    function show_front() {
+        $.ajax({
+            type: 'POST',
+            url: '../show_front/',
+            dataType: "json",
+            data: {
+                "front": JSON.stringify(front.value),
+            },
+            async: true,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                console.log(obj);
+                picture_path_list = obj.picture_path_list;
+                picture_true_list = obj.picture_true_list;
+                true_list = obj.true_list;
+                index_list = obj.index_list;
+                path_list = obj.path_list;
+                display(picture_path_list, picture_true_list, true_list, index_list, path_list);
+            }
+        });
+    }
+
+
+    function display(picture_path_list, picture_true_list, true_list, index_list, path_list) {
+        {#清空div#}
+        $("#queryPic").empty();
+
+        if (arguments.length == 0) {
+            console.log("参数list没有传递!");
+
+            {#var div = document.getElementById('queryPic');#}
+            {#div.style.height = 130 * 3368 + "px";#}
+            {#div.style.width = 75 * 30 + 100 + "px";#}
+            {#新建svg#}
+            var w = document.getElementById('queryPic').clientWidth;
+            var h = document.getElementById('queryPic').clientHeight;
+            var svg = d3.select("body")
+                .select("#queryPic")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+
+        } else {
+            console.log(picture_path_list);
+            len = 0;
+            for (var key in picture_path_list) {
+                len++;
+            }
+            h_q = 190
+            h_g = 150
+            jiange_q = 20 + 250
+            jiange_g = 60 + 250
+            var div = document.getElementById('queryPic');
+            div.style.height = (h_q + jiange_q) * len + "px";
+            div.style.width = 150 * 500 + "px";
+            {#新建svg#}
+            var w = document.getElementById('queryPic').clientWidth;
+            var h = document.getElementById('queryPic').clientHeight;
+            var svg = d3.select("body")
+                .select("#queryPic")
+                .append("svg")
+                .attr("width", (h_q + jiange_q) * 500 + "px")
+                .attr("height", (h_q + jiange_q) * 500 + "px");
+            var i = 0
+            for (var key in picture_path_list) {
+                {#绘制目标图片#}
+                svg
+                    .append("svg:image")
+                    .attr("xlink:href", key)
+                    .attr("x", 10)
+                    .attr("y", 10 + i * (h_q + jiange_q))
+                    // .attr("width", "60")
+                    .attr("height", h_q)
+                    .attr("pid", key)
+                    .on("click", function () {
+                        pid = d3.select(this).attr("pid");
+                        pid = pid.substr(46);
+                        console.log(pid);
+                        console.log(g_num.value);
+                        $.ajax({
+                            type: 'POST',
+                            url: '../getAim_tojson/',
+                            dataType: "json",
+                            data: {
+                                "pid": JSON.stringify(pid),
+                                "g_num": JSON.stringify(g_num.value),
+                            },
+                            async: true,
+                            success: function (data) {
+                                window.location.href = 'index.html?pid=' + pid;
+                            }
+                        });
+                        {#window.location.href = 'index.html?pid=' + pid;#}
+                    });
+                svg
+                    .append("text")
+                    .attr("fill", "red")
+                    .attr("font-size", "14px")
+                    .attr("x", 17)
+                    .attr("y", 21 + i * (h_q + jiange_q) + h_q)
+                    .text(function (d) {
+                        return "pid=" + key.substring(46, 50);
+                    });
+
+                {#绘制所有ground truth信息#}
+                svg.append("rect")
+                    .attr("fill", "#FFE699")
+                    .attr("x", 150)
+                    .attr("y", 10 + i * (h_g + jiange_g) + h_g + 10 + 10)
+                    .attr("width", "1700")
+                    .attr("height", "20");
+
+                var true_linear = d3.scaleLinear()
+                    .domain([0, true_list[key].length])
+                    .range([0, 1700]);
+
+                for (j = 1; j < index_list[key].length; j++) {
+                    x_position = true_linear(index_list[key][j]) + 150;
+                    svg.append("rect")
+                        .attr("fill", "#FF9292")
+                        .attr("x", x_position)
+                        .attr("y", 10 + i * (h_g + jiange_g) + h_g + 10 + 10)
+                        .attr("width", "5")
+                        .attr("height", "20");
+                }
+                for (j = 0; j < index_list[key].length; j++) {
+                    svg
+                        .append("svg:image")
+                        .attr("xlink:href", path_list[key][j])
+                        .attr("x", 150 + 100 * j)
+                        .attr("y", 10 + i * (h_g + jiange_g) + h_g + 70)
+                        .attr("height", h_g - 15);
+                    svg
+                        .append("text")
+                        .attr("fill", "white")
+                        .attr("font-size", "14px")
+                        .attr("x", 150 + 100 * j)
+                        .attr("y", 10 + i * (h_g + jiange_g) + h_g + 10 + 10 + 40)
+                        .text(function (d) {
+                            return index_list[key][j + 1];
+                        });
+                }
+                {#svg#}
+                {#    .append("text")#}
+                {#    .attr("fill", "white")#}
+                {#    .attr("font-size", "14px")#}
+                {#    .attr("x", 150)#}
+                {#    .attr("y", 10 + i * (h_g + jiange_g) + h_g + 10 + 10 + 40)#}
+                {#    .text(function (d) {#}
+                {#        return index_list[i].toString();#}
+                {#    });#}
+
+                {#绘制检索结果#}
+                var item = picture_path_list[key];
+                var tof = picture_true_list[key];
+                for (j = 0; j < item.length; j++) {
+                    svg
+                        .append("svg:image")
+                        .attr("xlink:href", item[j])
+                        .attr("x", 150 + 100 * j)
+                        .attr("y", 10 + i * (h_g + jiange_g))
+                        .attr("height", h_g - 15);
+                    svg
+                        .append("text")
+                        .attr("fill", "red")
+                        .attr("font-size", "14px")
+                        .attr("x", 155 + 100 * j)
+                        .attr("y", 6 + i * (h_g + jiange_g) + h_g)
+                        .text(function (d) {
+                            return "pid=" + item[j].substring(58, 62);
+                        });
+                    svg
+                        .append("rect")
+                        .attr("x", 150 + 100 * j)
+                        .attr("y", 10 + i * (h_g + jiange_g))
+                        .attr("width", "67")
+                        .attr("height", h_g + 7)
+                        .attr("fill", "rgba(255,0,0,0)")
+                        .attr("stroke", function () {
+                            if (parseInt(tof[j]) == 0) {
+                                return "red";
+                                {#return "rgba(255, 0, 0, 0)";#}
+                            } else if (parseInt(tof[j]) == 1) {
+                                return "blue";
+                                {#return "rgba(255, 0, 0, 0)";#}
+                            }
+                        })
+                        .attr("stroke-width", "5px");
+                }
+                i++;
+            }
+        }
+    }
+
+    function displayOverview() {
+        d3.json("static/data/ForQueryFilter/QGpath_true3368.json", function (error, data) {
+            var w = document.getElementById('queryPic').clientWidth;
+            var h = document.getElementById('queryPic').clientHeight;
+            var svg = d3.select("body")
+                .select("#queryPic")
+                .append("svg")
+                .attr("width", 500 * 50)
+                .attr("height", 3368 * 10);
+            console.log(data["dict_true"]);
+            index = 0;
+            for (var key in data["dict_true"]) {
+                {#console.log(data["dict_true"][key]);#}
+                if (index < 300) {
+                    for (ii = 0; ii < 500; ii++) {
+                        svg.append("rect")
+                            .attr("x", ii * w / 500)
+                            .attr("y", index * 20 + 40)
+                            .attr("width", 10)
+                            .attr("height", 10)
+                            .attr("fill", function (d, i) {
+                                if (data["dict_true"][key][ii] == 1) {
+                                    return "#FF9292";
+                                }
+                                if (data["dict_true"][key][ii] == 0) {
+                                    return "#FFE699";
+                                }
+
+                            });
+                    }
+                }
+
+                index++;
+            }
+            console.log(index);
+        });
+
+    }
+
+    display();
+</script>
+
+
+</body>
+</html>

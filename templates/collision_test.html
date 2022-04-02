@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>Bounding Box Collision</title>
+    <meta charset="utf-8"/>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="/Video_Object_FeatureVis/static/js/collide.js"></script>
+    <script src="/Video_Object_FeatureVis/static/data/ForQueryFilter/display_tsne_result.js"></script>
+</head>
+<style>
+    svg {
+        height: 80%;
+        width: 80%;
+        background-color: aquamarine;
+    }
+</style>
+<body>
+
+<div id="viz">
+    <svg class="main">
+    </svg>
+</div>
+</body>
+
+<script>
+    var randomPoints = data['feature_tsne_result']
+    console.log(randomPoints)
+    // var randomPoints = [{value:10,x:100,y:20},{value:10,x:100,y:20},{value:10,x:100,y:20},{value:10,x:50,y:100},{value:10,x:50,y:100},{value:10,x:200,y:30},{value:10,x:200,y:30},{value:10,x:200,y:300}]
+
+    var xScale = d3.scaleLinear()
+        .domain([d3.min(randomPoints, function (d) {
+            return d[0];
+        }), d3.max(randomPoints, function (d) {
+            return d[0];
+        })])
+        .range([40, 1500 - 40]);
+    var yScale = d3.scaleLinear()
+        .domain([d3.min(randomPoints, function (d) {
+            return d[1];
+        }), d3.max(randomPoints, function (d) {
+            return d[1];
+        })])
+        .range([40, 760 - 40]);
+
+    var nodeEnter = d3.select("svg.main")
+        .selectAll("g.node")
+        .data(randomPoints)
+        .enter()
+        .append("rect")
+        .attr("width", function (d) {
+            return 20
+        })
+        .attr("height", function (d) {
+            return 10
+        })
+        .attr("x", function (d) {
+            return xScale(d[0]);
+        })
+        .attr("y", function (d) {
+            return yScale(d[1]);
+        })
+
+
+</script>
+
+</html>
+
+</html>

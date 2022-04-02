@@ -1,0 +1,143 @@
+{% load static %}
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="never">
+    <title>Reid_Vis</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/index_layout.css" %}">
+</head>
+<body>
+
+<div id="head">
+    <div id="head_text">
+        <a style="color: #ced4da;font-family: Arial;font-size: 18px">Reid_Vis</a>
+    </div>
+</div>
+
+<div id="query_parameter">
+    <div id="query">
+        {#query标签#}
+        <div class="title">
+            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;Query&nbsp;&nbsp;</a>
+        </div>
+        {#query图片#}
+        <div id="probe">
+            {#            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;probe&nbsp;&nbsp;</a>#}
+        </div>
+        <div id="attributes">
+            {#            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;attr&nbsp;&nbsp;</a>#}
+            <div>
+                <a style="color: #333;font-family: Arial;font-size: 14px">gender&nbsp;&nbsp;</a>
+                <input type="checkbox" id="male" name="drone" value="male"
+                       checked>
+                <label for="male">male</label>
+                <input type="checkbox" id="female" name="drone" value="female"
+                >
+                <label for="female">female</label>
+            </div>
+            <div>
+                <a style="color: #333;font-family: Arial;font-size: 14px">hair&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <input type="checkbox" id="short" name="drone" value="short"
+                       checked>
+                <label for="short">short</label>
+                <input type="checkbox" id="long" name="drone" value="long"
+                >
+                <label for="long">long</label>
+            </div>
+             <div>
+                <a style="color: #333;font-family: Arial;font-size: 14px">up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <input type="checkbox" id="short" name="drone" value="short"
+                       checked>
+                <label for="short">short</label>
+                <input type="checkbox" id="long" name="drone" value="long"
+                >
+                <label for="long">long</label>
+            </div>
+            <div>
+                <a style="color: #333;font-family: Arial;font-size: 14px">down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <input type="checkbox" id="short" name="drone" value="short"
+                       checked>
+                <label for="short">short</label>
+                <input type="checkbox" id="long" name="drone" value="long"
+                >
+                <label for="long">long</label>
+            </div>
+            <div>
+                <a style="color: #333;font-family: Arial;font-size: 14px">down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <input type="checkbox" id="dress" name="drone" value="dress"
+                       checked>
+                <label for="short">dress</label>
+                <input type="checkbox" id="pants" name="drone" value="pants"
+                >
+                <label for="long">pants</label>
+            </div>
+            <a style="color: #333;font-family: Arial;font-size: 14px">hat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <br/>
+            <a style="color: #333;font-family: Arial;font-size: 14px">backpack&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <br/>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    <div id="overview">
+        {#overview标签#}
+        <div class="title">
+            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;Overview&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <div id="parameter">
+        {#Parameter标签#}
+        <div class="title">
+            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;Parameter&nbsp;&nbsp;</a>
+        </div>
+    </div>
+</div>
+
+<div id="Pic_">
+    <div id="Pic">
+        {#Pic_summarization标签#}
+        <div class="title">
+            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;Pic_summarization&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <div id="Pic_parameter">
+        <div class="title">
+            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;Rank list&nbsp;&nbsp;</a>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="{% static 'js/external/d3.v4.min.js' %}"></script>
+<script src="{% static "js/external/jquery.min.js" %}"></script>
+<script src="{% static "js/external/bootstrap.min.js" %}"></script>
+<script src="{% static "js/view/picDisplay.js" %}"></script>
+<script src="{% static "js/external/collide.js" %}"></script>
+<script>
+    {#var loc = location.href;#}
+    {#var n1 = loc.length;//地址的总长度#}
+    {#var n2 = loc.indexOf("=");//取得=号的位置#}
+    {#pid=decodeURI(loc.substr(n2 + 1, n1 - n2));#}
+    {#console.log(pid);#}
+    {#picDisplay(pid);#}
+    picDisplay()
+</script>
+</body>
+</html>

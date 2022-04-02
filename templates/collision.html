@@ -1,0 +1,103 @@
+<html>
+<head>
+    <title>Bounding Box Collision</title>
+    <meta charset="utf-8"/>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="/Video_Object_FeatureVis/static/js/collide.js"></script>
+</head>
+<style>
+    svg {
+        height: 80%;
+        width: 80%;
+        background-color: aquamarine;
+    }
+</style>
+<body>
+
+<div id="viz">
+    <svg class="main">
+    </svg>
+</div>
+</body>
+
+<script>
+    d3.json("/Video_Object_FeatureVis/static/data/ForQueryFilter/display_tsne_result.json", function (error, data) {
+        var randomPoints = [{value: 10, x: 10, y: 20}, {value: 10, x: 10, y: 20}, {value: 10, x: 10, y: 20}, {
+            value: 10,
+            x: 50,
+            y: 100
+        }, {value: 10, x: 50, y: 100}, {value: 10, x: 200, y: 30}, {value: 10, x: 200, y: 30}, {
+            value: 10,
+            x: 200,
+            y: 300
+        }]
+
+
+        var forceX = d3.forceX(function (d) {
+            return d.x
+        })
+            .strength(0.1)
+
+        var forceY = d3.forceY(function (d) {
+            return d.y
+        })
+            .strength(1)
+        var collide = d3.bboxCollide(function (d, i) {
+            return [[-3, -3], [3, 3]]
+        })
+            .strength(1)
+            .iterations(2)
+        var force = d3.forceSimulation(randomPoints)
+            .velocityDecay(0.3)
+            .force("x", forceX)
+            .force("y", forceY)
+            .force("collide", collide)
+            .on("tick", updateNetwork);
+
+        var nodeEnter = d3.select("svg.main")
+            .selectAll("g.node")
+            .data(randomPoints)
+            .enter()
+            .append("g")
+            .attr("class", "node")
+            .append("rect")
+            .style("width", function (d) {
+                return d.value * 2
+            })
+            .style("height", function (d) {
+                return d.value * 1
+            })
+            .style("x", function (d) {
+                return d.x
+            })
+            .style("y", function (d) {
+                return d.y
+            })
+
+        function updateNetwork() {
+            var xScale = d3.scaleLinear()
+                .domain([d3.min(randomPoints, function (d) {
+                    return d.x;
+                }), d3.max(randomPoints, function (d) {
+                    return d.x;
+                })])
+                .range([10, 800 - 20]);
+            var yScale = d3.scaleLinear()
+                .domain([d3.min(randomPoints, function (d) {
+                    return d.x;
+                }), d3.max(randomPoints, function (d) {
+                    return d.y;
+                })])
+                .range([10, 600 - 200]);
+            d3.select("svg.main").selectAll("g.node")
+                .transition()
+                .duration(100)
+                .attr("transform", function (d) {
+                    return "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"
+                })
+        }
+    })
+
+</script>
+
+</html>

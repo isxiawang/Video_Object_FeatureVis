@@ -1,0 +1,453 @@
+{% load static %}
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="never">
+    <title>Reid_Vis</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/index_layout.css" %}">
+    <style>
+        .slider-1 input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 3px;
+            border-radius: 0px;
+            background: -webkit-linear-gradient(#ace0c1, #ace0c1) no-repeat #e7e4e4;
+        {#background: -webkit-linear-gradient(#ace0c1, #ace0c1) no-repeat #e7e4e4;#} background-size: 100%; /* 因为周期默认value=0.50正好占50% */
+            margin: 8px;
+        }
+
+        .slider-1 input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 11px; /*拖动块高度*/
+            width: 11px; /*拖动块宽度*/
+            background: rgb(38, 165, 153); /*拖动块背景*/
+        {#background: rgb(38, 165, 153); /*拖动块背景*/#} border-radius: 50%; /*外观设置为圆形*/
+            border: solid 1px rgb(38, 165, 153); /*设置边框*/
+        {#border: solid 1px rgb(38, 165, 153); /*设置边框*/#}
+        }
+
+        input[type='checkbox'] {
+            position: relative;
+            cursor: pointer;
+            width: 15px;
+            height: 15px;
+            font-size: 8px;
+        }
+
+        input[type='checkbox']:checked::after {
+            position: absolute;
+            top: 0;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 15px;
+            height: 15px;
+            content: '\2713';
+            color: #ffffff;
+            font-size: 8px;
+            font-weight: 700;
+            background-color: #26a69a;
+            border-radius: 2px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+{#<div id="head">#}
+{#    <div class="row">#}
+{#        &nbsp;&nbsp;#}
+{#        <div class="col-md-1" style="position:center; top: 4px; ">#}
+{#            <select style="height:20px; width: 80px; font-size:5px; position:center;">#}
+{#                <option>pid#01</option>#}
+{#                <option>pid#02</option>#}
+{#                <option>pid#03</option>#}
+{#                <option>pid#04</option>#}
+{#            </select>#}
+{#        </div>#}
+{#        <div class="col-md-9" id="head_text" style="text-align: center;">#}
+{#            <a style="color: #000000;font-family: Arial;font-size: 18px">ReidVis</a>#}
+{#        </div>#}
+{#        <div class="col-md-1" style="float:right; top: 2px;">#}
+{#            <a style="float:right;">&nbsp;&nbsp;</a>#}
+{#            <button type="button"#}
+{#                    style="height:23px; width: 80px;font-size: 5px; float:right; background-color: #e8970b"> Submit#}
+{#            </button>#}
+{##}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+<div id="query_parameter">
+    <div id="query">
+        {#query标签#}
+        <div class="title">
+            <a style="color: #ffffff;font-family: Arial;font-size: 14px">&nbsp;Query&nbsp;&nbsp;</a>
+        </div>
+        {#query图片#}
+        <div id="query_subtitle">
+            <div class="subtitile" style="text-align: center;"><a
+                    style="color: #3c7654;font-family: Arial;font-size: 14px; text-align: center;">probe</a></div>
+            <div class="subtitile" style="text-align: center;"><a
+                    style="color: #3c7654;font-family: Arial;font-size: 14px; text-align: center;">parameter</a></div>
+        </div>
+        <div id="probe">
+            <div id="search_person">
+                <div class="row">
+                    <div class="col-md-12" style="position:left; top: 6px; ">
+                        &nbsp;&nbsp;<img src="http://127.0.0.1:8000/static/data/icon/search_person1.svg" width="20"
+                                         height="20"/>
+                        <select style="height:23px; width: 80px; font-size:5px; border: 1px solid #a3a3a3;border-radius: 5px;position:center;">#}
+                            <option>option</option>
+                            <option>pid#02</option>
+                            <option>pid#03</option>
+                            <option>pid#04</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            &nbsp;&nbsp;
+            <div id="probe_image">
+                &nbsp;<img src="http://127.0.0.1:8000/static/data/icon/person.svg" width="20"
+                           height="20"/> <a
+                    style="color: #333;font-family: Calibri;font-size: 17px;font-style: italic;"> pid#01</a>
+            </div>
+            {#            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;probe&nbsp;&nbsp;</a>#}
+        </div>
+        <div id="attributes">
+            <a style=" color: #999595;">-------------------------</a>
+            <div>
+                <img src="http://127.0.0.1:8000/static/data/icon/time.svg" width="20" height="20"/>
+                <a style="color: #333;font-family: Calibri;font-size: 17px;font-weight:bold">time : </a>
+                <a style="color: #333;font-family: Calibri;font-size: 17px;font-style: italic;">s1_001351</a>
+            </div>
+            <a style=" color: #999595;">-------------------------</a>
+            <div>
+                <img src="http://127.0.0.1:8000/static/data/icon/camera.svg" width="20" height="20"/>
+                <a style="color: #333;font-family: Calibri;font-size: 17px;font-weight:bold">camera : </a>
+                <a style="color: #333;font-family: Calibri;font-size: 17px;font-style: italic;">c#01</a>
+            </div>
+            <a style=" color: #999595;">-------------------------</a>
+            <div class="slider-1">
+                <a style="color: #333;font-family: Calibri;font-size: 17px">rank : </a>
+                <a style="color: #333;font-family: Calibri;font-size: 17px" id="wl_value">500</a><br/>
+                <input type="range" min="0" max="1" step="0.1" value="0.5" id="rank"
+                       style="width:120px;" onchange="change_rank()"/>
+            </div>
+            <a style=" color: #999595;">-------------------------</a>
+            <div class="slider-1">
+                <a style="color: #333;font-family: Calibri;font-size: 17px">context : </a>
+                <a style="color: #333;font-family: Calibri;font-size: 17px" id="wl_value2">0.5</a><br/>
+                <input type="range" min="0" max="1" step="0.1" value="0.5" id="context"
+                       style="width:120px;" onchange="change_context()"/>
+            </div>
+            <a style=" color: #999595;">-------------------------</a>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option1" onclick="checkbox_rank(this)"> <a
+                    style="color: #333;font-family: Calibri;font-size: 17px">rank</a>
+            </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox2" value="option2" onclick="checkbox_route(this)"> <a
+                    style="color: #333;font-family: Calibri;font-size: 17px">route</a>
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" value="option3" onclick="checkbox_move(this)"> <a
+                    style="color: #333;font-family: Calibri;font-size: 17px">move</a>
+            </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox4" value="option4" onclick="checkbox_color(this)"> <a
+                    style="color: #333;font-family: Calibri;font-size: 17px">color</a>
+            </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style=" color: #999595;">-------------------------</a>
+        </div>
+    </div>
+    <div id="overview">
+        {#overview标签#}
+        <div class="title">
+            <a style="color: #ffffff;font-family: Arial;font-size: 14px">&nbsp;Search_result&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    {#    <div id="parameter">#}
+    {#Parameter标签#}
+    {#        <div class="title">#}
+    {#            <a style="color: #ffffff;font-family: Arial;font-size: 14px">&nbsp;Parameter&nbsp;&nbsp;</a>#}
+    {#        </div>#}
+    {#    </div>#}
+</div>
+
+<div id="Pic_">
+    {#  Pic_summarization    #}
+    <div id="Pic">
+        {#Pic_summarization标签#}
+        <div class="title">
+            <a style="color: #ffffff;font-family: Arial;font-size: 14px">&nbsp;Rank_summarization&nbsp;&nbsp;</a>
+        </div>
+        <div id="jian_bian_dai">
+        </div>
+    </div>
+    {#  Rank list  #}
+    <div id="rank_title">
+        <div class="title">
+            <a style="color: #ffffff;font-family: Arial;font-size: 14px">&nbsp;Initial_rank_list&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <div id="Pic_parameter">
+
+    </div>
+    {#  compression test  #}
+    <div id="compression">
+        <div class="title">
+            <a style="color: #333;font-family: Arial;font-size: 14px">&nbsp;compression test&nbsp;&nbsp;</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script src="{% static 'js/external/d3.v3.min.js' %}"></script>
+<script src="{% static 'js/external/d3.v4.min.js' %}"></script>
+<script src="{% static "js/external/jquery.min.js" %}"></script>
+<script src="{% static "js/external/bootstrap.min.js" %}"></script>
+<script src="{% static "js/external/collide.js" %}"></script>
+<script src="{% static "js/external/getArrayIndex.js" %}"></script>
+{#view#}
+<script src="{% static "js/view/picDisplay.js" %}"></script>
+<script src="{% static "js/view/probe.js" %}"></script>
+<script src="{% static "js/view/overview.js" %}"></script>
+<script>
+    function change_rank() {
+        var value = document.getElementById('rank').value;
+        console.log(value);
+        document.getElementById('wl_value').innerHTML = value * 1000;
+        document.getElementById('rank').setAttribute("background-size", "50%");
+
+
+    }
+    function change_context() {
+        var value = document.getElementById('context').value;
+        console.log(value);
+        document.getElementById('wl_value2').innerHTML = value ;
+        document.getElementById('context').setAttribute("background-size", "50%");
+
+
+    }
+
+
+    {#var loc = location.href;#}
+    {#var n1 = loc.length;//地址的总长度#}
+    {#var n2 = loc.indexOf("=");//取得=号的位置#}
+    {#pid = decodeURI(loc.substr(n2 + 1, n1 - n2));#}
+    {#console.log(pid);#}
+    {#picDisplay(pid);#}
+
+    {#pid = "1239_c6s3_042167_00.jpg";#}
+    {#pid = "1239_c2s3_012107_00.jpg";#}
+    pid = "0710_c1s3_072326_00.jpg";
+    picDisplay(pid);
+    probeDisplay(pid);
+
+
+    var route_g;
+    p = pid.substr(0, 19);
+    M = 883;
+    H = 500;
+
+
+    function checkbox_rank(checkbox) {
+        var hang = result_list.length;
+        if (hang > 1) {
+            N = H;
+        } else {
+            N = M;
+        }
+        var scaleColor = d3.scaleLinear()
+            .domain([N, N * (6 / 7), N * (5 / 7), N * (4 / 7), N * (3 / 7), N * (2 / 7), N * (1 / 7), 0])
+            .range(["#e3c494", "#f7fcb9",
+                "#addd8e", "#41ab5d", '#41ab5d',
+                "#238443", "#025f3a"]);
+        if (checkbox.checked == true) {
+            d3.json("../static/data/Display/" + p + "_display.json", function (error, data) {
+                d3.selectAll(".hotrect")
+                    .attr("fill", function () {
+                        return scaleColor(d3.select(this).attr("rect_num"));
+                    });
+            });
+        } else {
+
+        }
+    }
+
+    function checkbox_move(checkbox) {
+        var hang = result_list.length;
+        if (hang > 1) {
+            N = H;
+        } else {
+            N = M;
+        }
+        var scaleColor = d3.scaleLinear()
+            .domain([N, N * (6 / 7), N * (5 / 7), N * (4 / 7), N * (3 / 7), N * (2 / 7), N * (1 / 7), 0])
+            .range(["#e3c494", "#f7fcb9",
+                "#addd8e", "#41ab5d", '#41ab5d',
+                "#238443", "#025f3a"]);
+        if (checkbox.checked == true) {
+            d3.json("../static/data/Display/" + p + "_display.json", function (error, data) {
+                feedback_length = result_list.length;
+                current_list = result_list[feedback_length - 1];
+                last_list = result_list[feedback_length - 2];
+                id_list = [];
+                rc_list = [];
+                console.log(current_list);
+                console.log(last_list);
+                d3.selectAll(".hotrect")
+                    .attr("www", function () {
+                        id_list.push(d3.select(this).attr("id"));
+                        r_num = d3.select(this).attr("rect_num");
+                        rc = getArrayIndex(last_list, current_list[r_num]) - r_num;
+                        console.log(rc);
+                        rc_list.push(rc);
+                    })
+                M = id_list.length;
+                let rcScale = d3.scaleLinear()
+                    .domain([d3.max(rc_list), 0])
+                    .range([0, N]);
+                for (var i = 0; i < M; i++) {
+                    d3.select("#" + id_list[i])
+                        .attr("fill", scaleColor(rcScale(rc_list[i])))
+                }
+
+            });
+        } else {
+
+        }
+    }
+
+    function checkbox_color(checkbox) {
+        var hang = result_list.length;
+        if (hang > 1) {
+            N = H;
+        } else {
+            N = M;
+        }
+        var scaleColor = d3.scaleLinear()
+            .domain([N, N * (6 / 7), N * (5 / 7), N * (4 / 7), N * (3 / 7), N * (2 / 7), N * (1 / 7), 0])
+            .range(["#e3c494", "#f7fcb9",
+                "#addd8e", "#41ab5d", '#41ab5d',
+                "#238443", "#025f3a"]);
+        if (checkbox.checked == true) {
+            d3.json("../static/data/Display/" + p + "_display.json", function (error, data) {
+                dis_fangcha = data["dis_fangcha"];
+                console.log(dis_fangcha);
+                id_list = []
+                fc_list = []
+                d3.selectAll(".hotrect")
+                    .attr("www", function () {
+                        id_list.push(d3.select(this).attr("id"));
+                        f_num = d3.select(this).attr("rect_num");
+                        fc = dis_fangcha[f_num];
+                        fc_list.push(fc);
+                    })
+                console.log(id_list);
+                console.log(fc_list);
+                M = id_list.length;
+                let fcScale = d3.scaleLinear()
+                    .domain([d3.max(fc_list), d3.min(fc_list)])
+                    .range([0, N]);
+                for (var i = 0; i < M; i++) {
+                    d3.select("#" + id_list[i])
+                        .attr("fill", scaleColor(fcScale(fc_list[i])))
+                }
+            });
+        } else {
+
+        }
+    }
+
+    function checkbox_route(checkbox) {
+        if (checkbox.checked == true) {
+            d3.selectAll(".cluster_index")
+                .attr("visibility", "hidden");
+            route = route_g;
+            route_list = []
+            for (var key_cluster1 in route) {
+                for (var key_cluster2 in route) {
+                    route_list.push(Math.abs((route[key_cluster1] - route[key_cluster2])));
+                }
+            }
+            len = Object.keys(route).length;
+            var i = 0;
+            var j = 0;
+            for (var key1 in route) {
+                trans1 = d3.select("#cluster" + key1.toString()).attr("transform");
+                console.log(trans1);
+                c1 = trans1.substring(10).split(',')
+                x1 = c1[0]
+                y1 = c1[1]
+                yl = y1.length
+                y1 = c1[1].substring(0, yl - 1)
+                console.log(x1);
+                console.log(y1);
+                for (var key2 in route) {
+                    if (j < i) {
+
+                    } else {
+                        trans2 = d3.select("#cluster" + key2.toString()).attr("transform");
+                        console.log(trans2);
+                        c2 = trans2.substring(10).split(',')
+                        x2 = c2[0]
+                        y2 = c2[1]
+                        yl = y2.length
+                        y2 = c2[1].substring(0, yl - 1)
+                        console.log(x2);
+                        console.log(y2);
+                        console.log("一条route");
+
+
+                        var scaleColor = d3.scaleLinear()
+                            .domain([d3.max(route_list), d3.min(route_list)])
+                            .range([1, 0]);
+                        var dataset = {
+                            source: {x: parseInt(x1), y: parseInt(y1)},
+                            target: {x: parseInt(x2), y: parseInt(y2)}
+                        };
+                        var diagonal = d3.svg.diagonal();
+                        svg1 = d3.select("#svg1");
+                        svg1.append("path")
+                            .attr("d", diagonal(dataset))
+                            .attr("class", "route")
+                            .attr("fill", "none")
+                            .attr("stroke", "grey")
+                            .attr("opacity", function () {
+                                return scaleColor(Math.abs(route[key2] - route[key1]));
+                            })
+                            .attr("stroke-width", 7);
+                    }
+                    j++;
+                }
+                i++;
+                j = 0;
+            }
+        } else {
+            d3.selectAll(".cluster_index")
+                .attr("visibility", "visible");
+            d3.selectAll(".route")
+                .remove();
+        }
+
+
+    }
+
+
+</script>
+</body>
+</html>
