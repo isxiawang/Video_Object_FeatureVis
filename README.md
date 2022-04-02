@@ -11,7 +11,7 @@ ReIDVis provides:
 
 ## Screenshots
 
-
+![avatar](/overview.jpg)
 
 
 ## Function
@@ -26,13 +26,8 @@ ReIDVis provides:
 # cd to your preferred directory and clone this repo
 git clone https://github.com/xiawang157/Video_Object_FeatureVis.git
 
-# create environment
+# create dependencies
 cd Video_Object_FeatureVis/
-conda create --name ReIDVis python=3.7
-conda activate ReIDVis
-
-# install dependencies
-# make sure `which python` and `which pip` point to the correct path
 pip install -r requirements.txt
 ```
 
