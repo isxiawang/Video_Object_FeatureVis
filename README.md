@@ -4,7 +4,7 @@ This repository contains source code used to explore and analyze the search spac
 
 ## Introduction
 
-We propose ReIDVis , which is a novel data exploration and data visualization prototype for person re-identification (Re-ID). 
+We propose ReIDVis , which is a novel data exploration and data visualization prototype for person Re-ID. 
 
 ReIDVis integrates a user-feedback mechanism that incorporates the person Re-ID model with human insights, and a composite visualization that support efficient visual browsing, retrieval, and exploration of candidate targets. To help identify person-of-interest, we propose an extended semi-supervised learning method by introducing a k-fusion post-rank algorithm to support incremental user feedback. In the visualization component, we develop a novel cluster-based visualization with an optimized layout to reduce visual occlusion and preserve user’s mental map. We also propose a multi-scale, pixel-based view to guide user exploration in the search space.
 
@@ -12,7 +12,7 @@ ReIDVis integrates a user-feedback mechanism that incorporates the person Re-ID 
 
 ## System screenshots
 
-The interface of the system. (A) the *probe panel* which allows users to select the person-of-interest (partially covered by an umbrella) as *probe* and set up the visual parameter of the search space. (B) the *search space view* to support exploration and provide feedback on the retrieval results. (C) the *spatiotemporal information view* which summarizes the spatiotemporal information of the retrieval results after three iterations. (D) the ranking list with the pixel-based visual encoding which allows users to quickly troubleshoot hard negative samples. (G) the ranking list with the raw image. (E) the exploration of the “path” node, where a front photo of the *probe* is found. (F) a *node* with the pixel-based visual encoding.
+The interface of the system. (A) the *probe panel* allows users to select the person-of-interest (partially covered by an umbrella) as *probe* and set up the visual parameter of the search space. (B) the *search space view* to support exploration and provide feedback on the retrieval results. (C) the *spatiotemporal information view* which summarizes the spatiotemporal information of the retrieval results after three iterations. (D) the ranking list with the pixel-based visual encoding which allows users to quickly troubleshoot hard negative samples. (G) the ranking list with the raw image. (E) the exploration of the “path” node, where a front photo of the *probe* is found. (F) a *node* with the pixel-based visual encoding.
 
 The system demonstration video of ReIDVis addresses at：https://youtu.be/8FWy6Yr4cos
 
@@ -23,8 +23,35 @@ The system demonstration video of ReIDVis addresses at：https://youtu.be/8FWy6Y
 ## Function
 
 - The semi-supervised learning method
+
+  input data: human-labeled data
+
+  ```
+  label = {'l_index': [0, 2, 1, 3, 4], 'Yl': [1, 1, -1, -1, -1]}
+  ```
+
+  output data: via [LapSVM.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/Graph_propagation/LapSVM.py)
+
 - The k-fusion post-rank algorithm
+
+  input data:
+
+  output data:
+
 - The cluster-based visualization
+
+  - *Ensure the stability of the incremental layout.* 
+
+    input data:
+
+    output data:
+
+  - *Remove the occlusion between nodes.* 
+
+    input data:
+
+    output data:
+
 
 
 
@@ -45,7 +72,7 @@ pip install -r requirements.txt
 
 (1) Install and configure the development environment according to requirement.txt.
 
-(2) Run /Video_Object_FeatureVis/view.py, and start the front-end web service.
+(2) Run [views.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/Video_Object_FeatureVis/views.py), and start the front-end web service.
 
 
 
