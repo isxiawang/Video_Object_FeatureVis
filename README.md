@@ -22,23 +22,25 @@ The system demonstration video of ReIDVis addresses at：https://youtu.be/8FWy6Y
 
 ## Function
 
-- The semi-supervised learning method
+- #### The semi-supervised learning method
 
-  input data: human-labeled data
+  Input data: human-labeled data ('l_index' is the index of the labeled data in the ranking list, 'Yl' is the value of labels).
 
   ```
   label = {'l_index': [0, 2, 1, 3, 4], 'Yl': [1, 1, -1, -1, -1]}
   ```
 
-  output data: via [LapSVM.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/Graph_propagation/LapSVM.py)
+  Output data: a new ranking list generated via [LapSVM.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/Graph_propagation/LapSVM.py).
 
-- The k-fusion post-rank algorithm
+  
 
-  input data:
+- #### The k-fusion post-rank algorithm
 
-  output data:
+  input data: branch ranking lists and a parameter *k*.
 
-- The cluster-based visualization
+  output data: a new ranking list generated via [k-fusion.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/K-fusion/k-fusion.py).
+
+- #### The cluster-based visualization
 
   - *Ensure the stability of the incremental layout.* 
 
@@ -70,7 +72,7 @@ pip install -r requirements.txt
 
 ## How to use
 
-(1) Install and configure the development environment according to requirement.txt.
+(1) Install and configure the development environment according to [requirements.txt](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/requirements.txt).
 
 (2) Run [views.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/Video_Object_FeatureVis/views.py), and start the front-end web service.
 
