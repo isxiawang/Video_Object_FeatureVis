@@ -5,6 +5,7 @@ This repository contains source code used to explore and analyze the search spac
 ## Introduction
 
 We propose ReIDVis , which is a novel data exploration and data visualization prototype for person re-identification (Re-ID). 
+
 ReIDVis integrates a user-feedback mechanism that incorporates the person Re-ID model with human insights, and a composite visualization that support efficient visual browsing, retrieval, and exploration of candidate targets. To help identify person-of-interest, we propose an extended semi-supervised learning method by introducing a k-fusion post-rank algorithm to support incremental user feedback. In the visualization component, we develop a novel cluster-based visualization with an optimized layout to reduce visual occlusion and preserve user’s mental map. We also propose a multi-scale, pixel-based view to guide user exploration in the search space.
 
 ![avatar](/pipeline.jpg)
