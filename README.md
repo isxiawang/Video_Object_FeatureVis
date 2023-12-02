@@ -74,7 +74,9 @@ pip install -r requirements.txt
 
 (1) Install and configure the development environment according to [requirements.txt](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/requirements.txt).
 
-(2) Run [views.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/Video_Object_FeatureVis/views.py), and start the front-end web service.
+(2) Load data from , and put the data in [static](https://github.com/xiawang157/Video_Object_FeatureVis/tree/master/static).
+
+(3) Run [views.py](https://github.com/xiawang157/Video_Object_FeatureVis/blob/master/Video_Object_FeatureVis/views.py), and start the front-end web service.
 
 
 
