@@ -12,7 +12,7 @@ ReIDVis integrates a user-feedback mechanism that incorporates the person Re-ID 
 
 ## System screenshots
 
-The interface of the system. (A) the *probe panel* allows users to select the person-of-interest (partially covered by an umbrella) as *probe* and set up the visual parameter of the search space. (B) the *search space view* to support exploration and provide feedback on the retrieval results. (C) the *spatiotemporal information view* which summarizes the spatiotemporal information of the retrieval results after three iterations. (D) the ranking list with the pixel-based visual encoding which allows users to quickly troubleshoot hard negative samples. (G) the ranking list with the raw image. (E) the exploration of the “path” node, where a front photo of the *probe* is found. (F) a *node* with the pixel-based visual encoding.
+Fig. 4: The interface of the system. (A) the *probe panel* which allows users to select the person-of-interest as a probe and set up the visual parameter of the search space. (B) the *search space view* which supports visual exploration and enables users to provide feedback on the samples. (C) the *spatiotemporal information view* which summarizes the spatiotemporal information of the retrieval results. (D) the ranking list composed of the pixel-based visual encoding which allows users to quickly retrieve strong negative samples. (E) the ranking list composed of the raw image. (F) the search space with the “route” mode, where a front photo of the probe(G) is found. (H) a node with pixel-based visual encoding.
 
 The system demonstration video of ReIDVis addresses at：https://youtu.be/8FWy6Yr4cos
 
